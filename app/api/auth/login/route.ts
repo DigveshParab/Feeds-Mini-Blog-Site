@@ -7,7 +7,6 @@ const JWT_SECRETKEY = process.env.JWT_SECRET as string;
 
 
 
-//todo: findout why do we write functions with export by default
 export async function POST(req:NextRequest){
     try {
         // get data from user
