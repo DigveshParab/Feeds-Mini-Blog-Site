@@ -147,29 +147,11 @@ export default function PostPage() {
 
 
   return (
-    <>    
+    <>
+    
     <div className="max-w-4xl mx-auto px-6 py-16 relative">
-      {/* Action buttons */}
+      <div className='mt-8 lg:mt-0'></div>
       <BackButton/>
-      {user?.email === authorData?.email && <div className="absolute top-6 right-6 flex gap-3">
-        {!post.is_published && (
-          <button onClick={e=>handlePublish(e)} className="bg-green-600 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-green-700">
-            Publish
-          </button>
-        )}
-        <button onClick={post.is_private?handleMakePublic:handleMakePrivate} className="bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-blue-700">
-          {post.is_private ? 'Make Public' : 'Make Private'}
-        </button>
-        <Link
-          href={`/edit/${post._id}`}
-          className="bg-gray-500 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-red-600">
-          Edit
-        </Link> 
-        <button onClick={handleDelete} className="bg-red-500 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-red-600">
-          Delete
-        </button>
-      </div>}
-
       {/* Title */}
       <h1 className="text-5xl font-semibold leading-tight mb-6">{post.title}</h1>
 
@@ -196,6 +178,27 @@ export default function PostPage() {
           <p key={idx}>{para}</p>
         ))}
       </div>
+
+            {/* Action buttons */}
+      {user?.email === authorData?.email && <div className="absolute top-6 right-4 flex gap-2 lg:gap-3">
+        {!post.is_published && (
+          <button onClick={e=>handlePublish(e)} className="bg-green-600 text-white text-sm font-medium px-2 py-2 rounded-md shadow-sm hover:bg-green-700">
+            Publish
+          </button>
+        )}
+        <button onClick={post.is_private?handleMakePublic:handleMakePrivate} className="bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-blue-700">
+          {post.is_private ? 'Make Public' : 'Make Private'}
+        </button>
+        <Link
+          href={`/edit/${post._id}`}
+          className="bg-gray-500 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-red-600">
+          Edit
+        </Link> 
+        <button onClick={handleDelete} className="bg-red-500 text-white text-sm font-medium px-5 py-2 rounded-md shadow-sm hover:bg-red-600">
+          Delete
+        </button>
+      </div>}
+
     </div>
     </>
   );
