@@ -23,9 +23,13 @@ export async function POST(req:NextRequest){
         // check if user already exist with type safety
         const existingUser = await User.findOne({email}).exec() as IUser || null;
 
-        if(existingUser){
-            return NextResponse.json({error:true,message:"User already exists, kindly login"},{status:409});
+        if(existingUser.email === email){
+            return NextResponse.json({error:true,message:"User already exists with this email, kindly login"},{status:200});
         }
+        if(existingUser.username === username){
+            return NextResponse.json({error:true,message:"User already exists with this username, kindly pick a new username"},{status:200});
+        }
+        
 
         // hash the password
         const hashedPassword = await bcrypt.hash(password,10);
@@ -41,13 +45,13 @@ export async function POST(req:NextRequest){
         const token = jwt.sign({userId:newUser._id,email:newUser.email},JWT_SECRET,{expiresIn:'7d'})
 
         // return data
-        return NextResponse.json({error:false,message:"User Created Successfully,kindly login to your account.",username:username,email:email},{
+        return NextResponse.json({error:false,message:"User Created Successfully,kindly login to your account."},{
             status:201,
             // headers: {
             //     "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=604800; Secure; SameSite=Strict`,
             // }  
         })
-
+        // todo handle proper for whne username already exist
 
     } catch (err) {
         console.error("Signup error :",err);

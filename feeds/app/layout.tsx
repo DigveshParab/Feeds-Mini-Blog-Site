@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body
       >
-        <Navbar />
-        {children}
+        <AuthProvider>
+          {/* <ProtectedRoute> */}
+            <Navbar/>
+            {children}
+          {/* </ProtectedRoute> */}
+        </AuthProvider>
       </body>
     </html>
   );

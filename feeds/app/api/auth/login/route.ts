@@ -18,12 +18,12 @@ export async function POST(req:NextRequest){
         // we explicitly mention that user is either type IUser or null
         const user = await  User.findOne({email}).exec() as IUser || null;
 
-        if(!user) return NextResponse.json({error:true,message:"No user exist with this email and password, kindly sign up"},{status:404});
+        if(!user) return NextResponse.json({error:true,message:"No user exist with this email and password, kindly sign up"},{status:200});
 
         // match password
         const passwordMatch = await bcrypt.compare(password,user.password);
 
-        if(!passwordMatch) return NextResponse.json({error:true,message:"Incorrect credentials"},{status:401});
+        if(!passwordMatch) return NextResponse.json({error:true,message:"Incorrect credentials"},{status:200});
 
         // if everything correct then generate a token
         const token = await jwt.sign({userId:user._id,email:user.email},JWT_SECRETKEY,{expiresIn:"7d"});

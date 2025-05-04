@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
         .exec();
 
         // todo put a strick type here
-        return NextResponse.json({ error: false, data: posts }, { status: 200 });
+        return NextResponse.json({ error: false, posts: posts }, { status: 200 });
 
     } catch (err) {
         console.error("Error fetching global posts:", err);

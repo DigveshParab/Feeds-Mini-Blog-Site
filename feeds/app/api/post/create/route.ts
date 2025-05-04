@@ -1,3 +1,4 @@
+import { connectToDB } from "@/lib/mongoose";
 import { Post } from "@/models/Post";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +13,7 @@ export async function POST(req:NextRequest){
         const {title, content, tags, type } = await req.json();
 
         if (!title || !content || !Array.isArray(tags) || tags.length === 0) {
-            return NextResponse.json({ error: true, message: "Title, content and tags are required." }, { status: 400 });
+            return NextResponse.json({ error: true, message: "Title, content and tags are required." }, { status: 200 });
           }
       
         // flags
@@ -48,3 +49,5 @@ export async function POST(req:NextRequest){
         return NextResponse.json({error:true,message:"Something went wrong."},{status:500});
     }
 }
+
+  

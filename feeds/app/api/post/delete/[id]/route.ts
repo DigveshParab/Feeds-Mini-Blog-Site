@@ -18,18 +18,18 @@ export async function DELETE(req: NextRequest, context: { params: Promise<{ id: 
         const { id } = await context.params;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return NextResponse.json({ error: true, message: "Invalid Post ID." }, { status: 400 });
+            return NextResponse.json({ error: true, message: "Invalid Post ID." }, { status: 200 });
         }
 
         await connectToDB();
 
         const post = await Post.findById(id).exec();
         if (!post) {
-            return NextResponse.json({ error: true, message: "Post not found." }, { status: 404 });
+            return NextResponse.json({ error: true, message: "Post not found." }, { status: 200 });
         }
 
         if (post.author.toString() !== user_id) {
-            return NextResponse.json({ error: true, message: "Unauthorized to delete this post." }, { status: 403 });
+            return NextResponse.json({ error: true, message: "Unauthorized to delete this post." }, { status: 200 });
         }
 
         await post.deleteOne(); // or Post.findByIdAndDelete(id)

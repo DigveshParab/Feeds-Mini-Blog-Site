@@ -1,9 +1,64 @@
-// components/AuthForm.tsx
 'use client'
 import { useState } from "react";
-
+import axiosinstance from '@/lib/axiosInstance'
+import { useRouter } from 'next/navigation';
+import { useAuth } from "@/context/AuthContext";
+import axiosInstance from '@/lib/axiosInstance'
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
+  const [username,setUsername] = useState<string>("");
+  const [email,setEmail] = useState<string>("");
+  const [password,setPassword] = useState<string>("");
+  const router = useRouter();
+  let isFilled = isLogin ? email.length > 0 && password.length > 0 : username.length > 0 && email.length > 0 && password.length > 0; 
+
+  const {setUser} = useAuth();
+
+
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await axiosinstance.post('/auth/login', { email, password });
+      
+      console.log(res.data)
+      if(res.data.error)
+      {
+        alert(res.data.message)
+      }
+      else{
+        // store data in global state for further use
+        const userdata = await axiosInstance.get('/auth/me');
+        setUser(userdata.data.user)
+        router.push('/home'); // or wherever you want to redirect after login
+      }
+    } catch (err) {
+      console.error("login issue",err)
+    }
+  };
+
+
+  const handleSignup = async(e: React.FormEvent)=>{
+    e.preventDefault();
+    try {
+      const res = await axiosinstance.post('/auth/signup',{username,email,password});
+
+      alert("hello")
+      const data = res.data;
+      if(data.error)
+      {
+        alert(data.message)
+      }
+      else{
+        console.log(data.message)
+        alert(res.data.message)
+        router.push("/home")
+      }
+    } catch (err) {
+      console.error("Signup error",err)
+    }
+  }
+
 
   const toggleMode = () => setIsLogin(!isLogin);
 
@@ -12,13 +67,13 @@ export default function AuthForm() {
       <h2 className="text-2xl font-semibold mb-6 text-center">
         {isLogin ? "Login to Feeds" : "Sign up for Feeds"}
       </h2>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={isLogin ? handleLogin : handleSignup}>
         {!isLogin && (
-          <input type="text" placeholder="Name" className="w-full p-2 border rounded" />
+          <input type="text" placeholder="Username" className="w-full p-2 border rounded" value={username} onChange={e=>setUsername(e.target.value)} required/>
         )}
-        <input type="email" placeholder="Email" className="w-full p-2 border rounded" />
-        <input type="password" placeholder="Password" className="w-full p-2 border rounded" />
-        <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-900">
+        <input type="email" placeholder="Email" className="w-full p-2 border rounded" value={email} onChange={e=>setEmail(e.target.value)} required/>
+        <input type="password" placeholder="Password" className="w-full p-2 border rounded" value={password} onChange={e=>setPassword(e.target.value)} required/>
+        <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-900 disabled:bg-gray-400"  disabled={!isFilled}>
           {isLogin ? "Login" : "Sign Up"}
         </button>
       </form>

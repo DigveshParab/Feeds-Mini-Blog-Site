@@ -1,7 +1,20 @@
+"use client"
 import AuthForm from "@/components/AuthForm";
 import Image from "next/image";
-
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import Loading from "@/components/LoadingSpinner";
 export default function Home() {
+  const router = useRouter();
+
+  const {loading,user} = useAuth();
+
+
+  if(user) return (
+    <Loading message="Loading"/>
+  )
+
   return (
     <main className="min-h-screen grid grid-cols-1 md:grid-cols-2 scroll-smooth">
       {/* app description */}

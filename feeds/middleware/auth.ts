@@ -6,7 +6,7 @@ export async function middleware(req:NextRequest){
     const token = req.cookies.get("token")?.value;
     
     if(!token){
-        return NextResponse.json({error:true,message:"Unauthorized user"},{status:401});
+        return NextResponse.json({error:true,is_logged_in:false,message:"Unauthorized user"},{status:200});
     }
 
     try {

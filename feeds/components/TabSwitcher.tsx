@@ -1,28 +1,56 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostList from "./PostList";
+import axiosInstance from "@/lib/axiosInstance"
+import Loading from "./LoadingSpinner";
+import NoPosts from "./NoPost";
+interface Post {
+  _id: string;
+  title: string;
+  tags: string[];
+}
+
+
 
 export default function TabSwitcher() {
   const [activeTab, setActiveTab] = useState<"global" | "my">("global");
-
+  const [globalPosts, setGlobalPosts] = useState<Post[]>([]);
+  const [myPosts, setMyPosts] = useState<Post[]>([]);
+  const [fetching,setFetching] = useState<boolean>(false)
   // Dummy data
-  const globalPosts = [
-    { id: "1", title: "Exploring Next.js", tags: ["nextjs", "react"] },
-    { id: "2", title: "Tailwind Tips", tags: ["tailwind", "css"] },
-  ];
+  // const globalPosts = [
+  //   { id: "1", title: "Exploring Next.js", tags: ["nextjs", "react"] },
+  //   { id: "2", title: "Tailwind Tips", tags: ["tailwind", "css"] },
+  // ];
 
-  const myPosts = [
-    { id: "3", title: "My Private Thoughts", tags: ["personal", "blog"] },
-    { id: "4", title: "Draft on UI", tags: ["draft", "design"] },
-  ];
+  // const myPosts = [
+  //   { id: "3", title: "My Private Thoughts", tags: ["personal", "blog"] },
+  //   { id: "4", title: "Draft on UI", tags: ["draft", "design"] },
+  // ];
 
-  const handleGlobalPosts = async () => {
-    // Fetch global posts from API
-  };
 
-  const handleMyPosts = async () => {
-    // Fetch user posts from API
-  };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setFetching(true)
+      try {
+        if (activeTab === "global") {
+          const res = await axiosInstance.get("/post/global");
+          setGlobalPosts(res.data.posts); // adjust according to your backend
+        } else {
+          const res = await axiosInstance.get("/post/user");
+          setMyPosts(res.data.posts); // again adjust if needed
+        }
+        setFetching(false)
+      } catch (error) {
+        setFetching(false)
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, [activeTab]);
+
+  
 
   return (
     <div className="max-w-4xl mx-auto max-w-screen">
@@ -41,13 +69,15 @@ export default function TabSwitcher() {
         </button>
       </div>
 
-      <div>
+      {!fetching ? <div>
         {activeTab === "global" ? (
-            <PostList posts={globalPosts} />
+            globalPosts.length > 0 ? <PostList posts={globalPosts} /> : <NoPosts/>
         ) : (
-            <PostList posts={myPosts} />
+            myPosts.length > 0 ? <PostList posts={myPosts} /> : <NoPosts/>
         )}
-      </div>
+      </div>:
+        <Loading message="Posts coming right up!"/>
+      }
     </div>
   );
 }
