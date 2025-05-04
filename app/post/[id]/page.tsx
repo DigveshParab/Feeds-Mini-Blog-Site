@@ -147,9 +147,7 @@ export default function PostPage() {
 
 
   return (
-    <>
-      <Navbar/>
-    
+    <>    
     <div className="max-w-4xl mx-auto px-6 py-16 relative">
       {/* Action buttons */}
       <BackButton/>
