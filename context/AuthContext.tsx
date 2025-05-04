@@ -1,4 +1,3 @@
-// context/AuthContext.tsx
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -7,7 +6,6 @@ import { useRouter } from 'next/navigation';
 interface User {
   id: string;
   email: string;
-  // Add other user properties as needed
 }
 
 interface AuthContextType {
@@ -25,7 +23,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
-      // todo add loading mechanism
       try {
         const res = await axiosInstance.get('/auth/me');
         console.log(res.data)
