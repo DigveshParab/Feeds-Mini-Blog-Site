@@ -18,7 +18,6 @@ export async function middleware(req:NextRequest){
         // we need to pass the data to the route
         // we create headers inorder to pass the data         
         const requestHeaders = new Headers(req.headers);
-        //todo: imporve type safety here
         requestHeaders.set('x-user-id',user.userId as string);
         requestHeaders.set('x-user-email',user.email as string);
         console.log("middle in action")
