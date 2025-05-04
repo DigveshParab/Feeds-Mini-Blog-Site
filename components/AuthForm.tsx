@@ -48,7 +48,6 @@ export default function AuthForm() {
       setIs_loading(true)
       const res = await axiosinstance.post('/auth/signup',{username,email,password});
 
-      alert("hello")
       const data = res.data;
       if(data.error)
       {
@@ -57,7 +56,7 @@ export default function AuthForm() {
       else{
         console.log(data.message)
         alert(res.data.message)
-        router.push("/home")
+        router.push("/")
       }
       setIs_loading(false)
     } catch (err) {
