@@ -20,10 +20,9 @@ export async function GET(req: NextRequest) {
         })
         .sort({ createdAt: -1 })
         .select("title tags author createdAt")
-        .populate("author", "username") // optional: show author's name
+        .populate("author", "username")
         .exec();
 
-        // todo put a strick type here
         return NextResponse.json({ error: false, posts: posts }, { status: 200 });
 
     } catch (err) {
