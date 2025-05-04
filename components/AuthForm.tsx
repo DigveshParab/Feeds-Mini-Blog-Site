@@ -56,7 +56,9 @@ export default function AuthForm() {
       else{
         console.log(data.message)
         alert(res.data.message)
+        setIsLogin(true)
         router.push("/")
+
       }
       setIs_loading(false)
     } catch (err) {
