@@ -14,7 +14,6 @@ export default function Navbar() {
   
     try {
       await axiosInstance.post('/auth/logout');
-      // todo clear global state
       setOpen(false)
       setUser(null)
       router.push('/');
@@ -57,25 +56,25 @@ export default function Navbar() {
               <div className="flex flex-col">
                 <button
                   className="w-full text-left px-6 py-3 text-lg text-gray-800 hover:bg-gray-100"
-                  onClick={() => {router.push('/home');setOpen(false)}} // Close dropdown on click
+                  onClick={() => {router.push('/home');setOpen(false)}} 
                 >
                   Home
                 </button>
                 <button
                   className="w-full text-left px-6 py-3 text-lg text-gray-800 hover:bg-gray-100"
-                  onClick={() => {router.push('/my-posts');setOpen(false)}} // Close dropdown on click
+                  onClick={() => {router.push('/my-posts');setOpen(false)}} 
                 >
                   My Library
                 </button>
                 <button
                   className="w-full text-left px-6 py-3 text-lg text-gray-800 hover:bg-gray-100"
-                  onClick={() => {router.push('/create');setOpen(false)}} // Close dropdown on click
+                  onClick={() => {router.push('/create');setOpen(false)}} 
                 >
                   Create Post
                 </button>
                 <button
                   className="w-full text-left px-6 py-3 text-lg text-red-500 hover:bg-gray-100"
-                  onClick={() => handleLogout()} // Close dropdown on click
+                  onClick={() => handleLogout()} 
                 >
                   Logout
                 </button>
