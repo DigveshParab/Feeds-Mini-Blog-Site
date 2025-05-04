@@ -11,12 +11,7 @@ export async function POST(req:NextRequest){
     try {
         const {email,username,password} = await req.json();
         console.log(email,password,username)
-        // check if payload recieved
-        // no need coz ill be checking this in frontend
-        // if(email || !username || password){
-        //     return NextResponse.json({error:true,message:"Email, Username and Password are required"},{status:400});
-        // }
-
+        
         // connect to DB
         await connectToDB();
 
@@ -46,12 +41,8 @@ export async function POST(req:NextRequest){
 
         // return data
         return NextResponse.json({error:false,message:"User Created Successfully,kindly login to your account."},{
-            status:201,
-            // headers: {
-            //     "Set-Cookie": `token=${token}; HttpOnly; Path=/; Max-Age=604800; Secure; SameSite=Strict`,
-            // }  
+            status:201, 
         })
-        // todo handle proper for whne username already exist
 
     } catch (err) {
         console.error("Signup error :",err);
