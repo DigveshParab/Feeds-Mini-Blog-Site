@@ -2,6 +2,7 @@
 
 A full-stack blogging platform built with Next.js, featuring user authentication, post creation, and a seamless reading experience.
 
+### Dployed link: [https://feeds-mini-blog-site-8ot8.vercel.app/](https://feeds-mini-blog-site-8ot8.vercel.app/)
 ---
 ## 🧾 Overview
 
