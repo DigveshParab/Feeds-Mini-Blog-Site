@@ -77,9 +77,9 @@ The application utilizes a straightforward schema design comprising two primary 
 
 ```json
 {
-  "name": "String",
+  "username": "String",
   "email": { "type": "String", "unique": true },
-  "password": { "type": "String", "select": false }
+  "password":{type:String,required:true}
 }
 ```
 
