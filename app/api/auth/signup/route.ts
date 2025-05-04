@@ -23,10 +23,10 @@ export async function POST(req:NextRequest){
         // check if user already exist with type safety
         const existingUser = await User.findOne({email}).exec() as IUser || null;
 
-        if(existingUser.email === email){
+        if(existingUser?.email === email){
             return NextResponse.json({error:true,message:"User already exists with this email, kindly login"},{status:200});
         }
-        if(existingUser.username === username){
+        if(existingUser?.username === username){
             return NextResponse.json({error:true,message:"User already exists with this username, kindly pick a new username"},{status:200});
         }
         
