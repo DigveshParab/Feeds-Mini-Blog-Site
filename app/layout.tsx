@@ -29,10 +29,10 @@ export default function RootLayout({
       <body
       >
         <AuthProvider>
-          {/* <ProtectedRoute> */}
+          <ProtectedRoute>
             <Navbar/>
             {children}
-          {/* </ProtectedRoute> */}
+          </ProtectedRoute>
         </AuthProvider>
       </body>
     </html>
